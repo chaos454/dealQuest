@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DealQuest | PC Game Deals Finder</title>
+    <!-- Google Fonts: Outfit & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for gaming/UI icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Background Glow Elements -->
+    <div class="glow-bg">
+        <div class="glow-sphere sphere-1"></div>
+        <div class="glow-sphere sphere-2"></div>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="header">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <i class="fa-solid fa-gamepad logo-icon"></i>
+                <span class="logo-text">DEAL<span class="highlight">QUEST</span></span>
+            </a>
+            <nav class="nav-menu">
+                <a href="#deals-section" class="nav-link active" id="nav-deals">
+                    <i class="fa-solid fa-fire"></i> Hot Deals
+                </a>
+                <button class="nav-btn-watchlist" id="watchlist-toggle-btn">
+                    <i class="fa-solid fa-bookmark"></i> Watchlist
+                    <span class="watchlist-badge" id="watchlist-count">0</span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero / Search Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">Level Up Your Library For <span class="text-gradient">Less</span></h1>
+            <p class="hero-subtitle">Track, compare, and hunt the absolute best deals in PC gaming across all major storefronts.</p>
+            
+            <!-- Hero Search Bar -->
+            <div class="search-container">
+                <div class="search-bar-wrapper">
+                    <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                    <input type="text" id="search-input" placeholder="Search for games (e.g. Cyberpunk, Witcher, Elden Ring)..." autocomplete="off">
+                    <button class="clear-btn" id="search-clear-btn" style="display: none;">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                    <button class="search-submit-btn" id="search-btn">Search</button>
+                </div>
+                <!-- Search Suggestions Autocomplete -->
+                <div class="search-suggestions" id="search-suggestions" style="display: none;">
+                    <!-- Populated via JS -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Container -->
+    <main class="main-content" id="deals-section">
+        <!-- Control Panel (Filters and Sorting) -->
+        <div class="control-panel">
+            <div class="panel-section">
+                <h3 class="panel-title"><i class="fa-solid fa-sliders"></i> Filter Deals</h3>
+                <div class="filter-grid">
+                    
+                    <!-- Store Selector -->
+                    <div class="filter-group">
+                        <label for="store-select">Storefront</label>
+                        <div class="custom-select-wrapper">
+                            <select id="store-select">
+                                <option value="all">All Stores</option>
+                                <!-- Populated dynamically -->
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Max Price Slider -->
+                    <div class="filter-group">
+                        <div class="label-with-value">
+                            <label for="price-range">Max Price</label>
+                            <span class="slider-value" id="price-val">Any</span>
+                        </div>
+                        <input type="range" id="price-range" min="0" max="60" value="60" step="1">
+                    </div>
+
+                    <!-- Min Savings Slider -->
+                    <div class="filter-group">
+                        <div class="label-with-value">
+                            <label for="savings-range">Min Savings</label>
+                            <span class="slider-value" id="savings-val">0%</span>
+                        </div>
+                        <input type="range" id="savings-range" min="0" max="95" value="0" step="5">
+                    </div>
+
+                    <!-- Min Metacritic Rating -->
+                    <div class="filter-group">
+                        <div class="label-with-value">
+                            <label for="rating-range">Min Metacritic</label>
+                            <span class="slider-value" id="rating-val">Any</span>
+                        </div>
+                        <input type="range" id="rating-range" min="0" max="100" value="0" step="5">
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Sorting & Quick Controls -->
+            <div class="sorting-row">
+                <div class="sort-group">
+                    <label for="sort-select">Sort By:</label>
+                    <div class="custom-select-wrapper sort-select-wrapper">
+                        <select id="sort-select">
+                            <option value="DealRating">Deal Rating (Recommended)</option>
+                            <option value="Savings">Savings %</option>
+                            <option value="Price">Price: Low to High</option>
+                            <option value="Metacritic">Metacritic Score</option>
+                            <option value="Title">Title (A-Z)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="checkbox-group">
+                    <label class="checkbox-container">
+                        <input type="checkbox" id="sale-only-checkbox" checked>
+                        <span class="checkmark"></span>
+                        On Sale Only
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section Title & Results Info -->
+        <div class="results-header">
+            <h2 class="section-heading" id="deals-heading">Active Game Deals</h2>
+            <span class="results-count" id="results-count">Loading deals...</span>
+        </div>
+
+        <!-- Deals Grid -->
+        <div class="deals-grid" id="deals-grid">
+            <!-- Loading Skeletons will appear here initially -->
+            <div class="skeleton-card"></div>
+            <div class="skeleton-card"></div>
+            <div class="skeleton-card"></div>
+            <div class="skeleton-card"></div>
+            <div class="skeleton-card"></div>
+            <div class="skeleton-card"></div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination" id="pagination-controls" style="display: none;">
+            <button class="page-btn" id="prev-page-btn" disabled>
+                <i class="fa-solid fa-chevron-left"></i> Previous
+            </button>
+            <span class="page-info" id="page-info">Page 1</span>
+            <button class="page-btn" id="next-page-btn">
+                Next <i class="fa-solid fa-chevron-right"></i>
+            </button>
+        </div>
+    </main>
+
+    <!-- Watchlist Slide-out Drawer -->
+    <div class="watchlist-drawer" id="watchlist-drawer">
+        <div class="watchlist-header">
+            <h3><i class="fa-solid fa-bookmark"></i> My Watchlist</h3>
+            <button class="close-drawer-btn" id="watchlist-close-btn">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+        <div class="watchlist-content" id="watchlist-items">
+            <!-- Populated dynamically -->
+            <div class="empty-state">
+                <i class="fa-solid fa-ghost"></i>
+                <p>Your watchlist is empty.</p>
+                <span class="subtext">Add games to track discounts across stores!</span>
+            </div>
+        </div>
+    </div>
+    <div class="drawer-overlay" id="drawer-overlay"></div>
+
+    <!-- Game Details Modal -->
+    <div class="modal" id="details-modal">
+        <div class="modal-content">
+            <button class="close-modal-btn" id="modal-close-btn">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            
+            <div class="modal-body" id="modal-body-content">
+                <!-- Dynamically populated via JS -->
+            </div>
+        </div>
+    </div>
+    <div class="modal-overlay" id="modal-overlay"></div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <p>&copy; 2026 DealQuest. Powered by the <a href="https://www.cheapshark.com/api" target="_blank" rel="noopener noreferrer">CheapShark API</a>.</p>
+            <p class="footer-subtext">All redirection links go through CheapShark affiliates in compliance with API terms of use.</p>
+        </div>
+    </footer>
+
+    <script src="app.js" defer></script>
+</body>
+</html>

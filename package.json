@@ -1,0 +1,18 @@
+{
+  "name": "dealquest",
+  "version": "1.0.0",
+  "description": "A premium PC Game Deals Finder web application",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "gaming",
+    "deals",
+    "cheapshark",
+    "pc-games",
+    "price-comparison"
+  ],
+  "author": "Harshit",
+  "license": "ISC"
+}
